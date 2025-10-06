@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { FaSquareGithub } from "react-icons/fa6";
 import { IoLogoLinkedin } from "react-icons/io5";
-import { FaSquareXTwitter } from "react-icons/fa6";
-import { MdDarkMode } from "react-icons/md";
+import { FaInstagram } from "react-icons/fa";import { MdDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
 import { useDarkMode } from "../context/DarkModeContext";
 const SocialLinks = () => {
-  const linkedinUrl = "https://www.linkedin.com/in/avinashs46/";
-  const githubUrl = "https://github.com/avinashsingh108";
-  const twitterUrl = "https://x.com/_Avi108_";
+  const linkedinUrl = "https://www.linkedin.com/in/piyush-garg-4a0b68237";
+  const githubUrl = "https://github.com/Anshul1321";
+  const instagramUrl = "https://www.instagram.com/piyush_1321_?igsh=b29qdjFtcG1yeml3";
   const { darkMode, toggleMode } = useDarkMode();
   
   const handleClick = (url) => {
@@ -27,8 +26,8 @@ const SocialLinks = () => {
             onClick={() => handleClick(githubUrl)}
             className="hover:cursor-pointer transition transform ease-in-out duration-300 hover:scale-105"
           />
-          <FaSquareXTwitter
-            onClick={() => handleClick(twitterUrl)}
+          <FaInstagram
+            onClick={() => handleClick(instagramUrl)}
             className="hover:cursor-pointer transition transform ease-in-out duration-300 hover:scale-105"
           />
         </div>
