@@ -10,40 +10,26 @@ import { FaWind } from "react-icons/fa";
 import { IoMdEye } from "react-icons/io";
 import Aqi from "./Aqi";
 import Map from "./Map";
+
 const Highlights = () => {
-  
   const { weatherData, airQuality, tempType } = useWeather();
-  const [timeZone, setTimeZone] = useState(null);
 
-  const fetchTimeZone = async (latitude, longitude) => {
-    const API = import.meta.env.VITE_ZONE_KEY;
-    const response = await fetch(
-      `https://api.timezonedb.com/v2.1/get-time-zone?key=${API}&format=json&by=position&lat=${latitude}&lng=${longitude}`
-    );
-    const data = await response.json();
-    return data.zoneName;
-  };
-
-
-  useEffect(() => {
-    const getTimeZone = async () => {
-      const { coord } = weatherData;
-      const timeZone = await fetchTimeZone(coord.lat, coord.lon);
-      setTimeZone(timeZone);
-    };
-
-    if (weatherData) {
-      getTimeZone();
-    }
-  }, [weatherData]);
-
-  if (!weatherData || !timeZone) return null;
+  if (!weatherData) return null;
   if (!airQuality) return null;
+
   const { sunrise, sunset } = weatherData.sys;
-  const sunriseTime = DateTime.fromSeconds(sunrise).setZone(timeZone);
-  const sunsetTime = DateTime.fromSeconds(sunset).setZone(timeZone);
-  const formattedSunriseTime = sunriseTime.toLocaleString(DateTime.TIME_SIMPLE);
-  const formattedSunsetTime = sunsetTime.toLocaleString(DateTime.TIME_SIMPLE);
+  
+  
+  const timezoneOffsetHours = weatherData.timezone / 3600;
+  
+  const sunriseTime = DateTime.fromSeconds(sunrise, { zone: 'UTC' })
+    .plus({ hours: timezoneOffsetHours });
+  const sunsetTime = DateTime.fromSeconds(sunset, { zone: 'UTC' })
+    .plus({ hours: timezoneOffsetHours });
+  
+  const formattedSunriseTime = sunriseTime.toFormat('h:mm a');
+  const formattedSunsetTime = sunsetTime.toFormat('h:mm a');
+  
   const humidity = weatherData.main.humidity;
   const aqi = airQuality.main.aqi;
   const tempMaxCel = Math.trunc(weatherData.main.temp_max - 273.15);

@@ -1,6 +1,11 @@
 const API_KEY = import.meta.env.VITE_API_KEY
 
+console.log('API_KEY:', API_KEY); 
+console.log('Full env:', import.meta.env);
+
 export const fetchCoordinates = async (place) => {
+    console.log('Fetching coordinates for:', place); 
+    console.log('Using API_KEY:', API_KEY); 
     const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${place}&limit=1&appid=${API_KEY}`);
     const data = await response.json();
     return data[0];
